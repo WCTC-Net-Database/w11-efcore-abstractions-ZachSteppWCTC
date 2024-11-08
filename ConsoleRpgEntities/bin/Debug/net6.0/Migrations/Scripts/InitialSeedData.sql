@@ -5,9 +5,9 @@ VALUES
 SET IDENTITY_INSERT Players OFF;
 
 SET IDENTITY_INSERT Monsters ON;
-INSERT INTO Monsters (Id, Name, MonsterType, Health, AggressionLevel, Sneakiness)
+INSERT INTO Monsters (Id, Name, MonsterType, Health, AggressionLevel, Sneakiness, BaseDamage)
 VALUES
-    (1, 'Bob Goblin', 'Goblin', 20, 10, 3);
+    (1, 'Bob Goblin', 'Goblin', 20, 10, 3, 5);
 SET IDENTITY_INSERT Monsters OFF;
 
 SET IDENTITY_INSERT Abilities ON;

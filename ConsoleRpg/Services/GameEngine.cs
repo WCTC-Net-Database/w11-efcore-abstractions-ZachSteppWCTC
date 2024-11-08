@@ -38,7 +38,8 @@ public class GameEngine
         {
             _outputManager.WriteLine("Choose an action:", ConsoleColor.Cyan);
             _outputManager.WriteLine("1. Attack");
-            _outputManager.WriteLine("2. Quit");
+            _outputManager.WriteLine("2. Heal");
+            _outputManager.WriteLine("3. Quit");
 
             _outputManager.Display();
 
@@ -50,12 +51,15 @@ public class GameEngine
                     AttackCharacter();
                     break;
                 case "2":
+                    Heal();
+                    break;
+                case "3":
                     _outputManager.WriteLine("Exiting game...", ConsoleColor.Red);
                     _outputManager.Display();
                     Environment.Exit(0);
                     break;
                 default:
-                    _outputManager.WriteLine("Invalid selection. Please choose 1.", ConsoleColor.Red);
+                    _outputManager.WriteLine("Invalid selection. Please choose a number.", ConsoleColor.Red);
                     break;
             }
         }
@@ -67,6 +71,46 @@ public class GameEngine
         {
             _player.Attack(targetableGoblin);
             _player.UseAbility(_player.Abilities.First(), targetableGoblin);
+            if (targetableGoblin.LifeCheck())
+            {
+                if (_player is ITargetable targetablePlayer)
+                {
+                    _goblin.Attack(targetablePlayer);
+                    if (!targetablePlayer.LifeCheck())
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"{_player.Name} was defeated!");
+                        Thread.Sleep(500);
+                        Environment.Exit(0);
+                    }
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"{_goblin.Name} was defeated!");
+                Thread.Sleep(500);
+                Environment.Exit(0);
+            }
+        }
+    }
+
+    private void Heal()
+    {
+        if (_player.Equipment.Consumable != null)
+        {
+            if (_player.Equipment.ConsumableAmount > 0)
+            {
+                _player.UseHeal();
+            }
+            else
+            {
+                _outputManager.WriteLine($"{_player.Name} is out of {_player.Equipment.Consumable.Name}s.", ConsoleColor.Green);
+            }
+        }
+        else 
+        {
+            _outputManager.WriteLine($"{_player.Name} has no consumables.", ConsoleColor.Green);
         }
     }
 

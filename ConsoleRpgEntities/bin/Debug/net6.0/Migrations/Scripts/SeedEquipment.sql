@@ -1,21 +1,11 @@
-﻿-- 1. Insert a new sword into the Items table
-INSERT INTO Items (Name, Type, Attack, Defense)
-VALUES ('Sword', 'Weapon', 5, 0);
+﻿set IDENTITY_INSERT Items ON;
+insert into Items (Id, Name, Type, Value, Defense, [Restore], Damage)
+values
+(1, 'Hero Blade', 'Weapon', 100, null, null, 3),
+(2, 'Obsidian Armor', 'Armor', 50, 1, null, null),
+(3, 'Health Potion', 'Consumable', 5, null, 3, null)
+set IDENTITY_INSERT Items OFF;
 
--- Get the Id of the newly inserted Item
-DECLARE @SwordId INT = SCOPE_IDENTITY();
-
--- 2. Insert a new Equipment record with the WeaponId set to the new sword
-INSERT INTO Equipments (WeaponId, ArmorId)
-VALUES (@SwordId, NULL);
-
--- Get the Id of the newly inserted Equipment
-DECLARE @EquipmentId INT = SCOPE_IDENTITY();
-
--- 3. Update the Player's EquipmentId to the new Equipment
--- Replace '1' with the actual Id of the player you want to update
-DECLARE @PlayerId INT = 1; -- Replace with actual Player Id
-
-UPDATE Players
-SET EquipmentId = @EquipmentId
-WHERE Id = @PlayerId;
+insert into Equipment
+values
+(1, 1, 2, 3, 3)

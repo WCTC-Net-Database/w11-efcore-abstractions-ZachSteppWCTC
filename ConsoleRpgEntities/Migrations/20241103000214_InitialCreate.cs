@@ -35,7 +35,8 @@ namespace ConsoleRpgEntities.Migrations
                     Health = table.Column<int>(type: "int", nullable: false),
                     AggressionLevel = table.Column<int>(type: "int", nullable: false),
                     MonsterType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Sneakiness = table.Column<int>(type: "int", nullable: true)
+                    Sneakiness = table.Column<int>(type: "int", nullable: true),
+                    BaseDamage = table.Column<int>(type: "int", nullable: false),
                 },
                 constraints: table =>
                 {
